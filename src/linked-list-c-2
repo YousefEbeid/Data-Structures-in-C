@@ -1,0 +1,60 @@
+#include <complex>
+#include <iostream>
+#include <stdlib.h>
+#include <string.h>
+#define sc struct company
+using namespace std;
+// TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+struct company {
+    char name[20];
+    int payments;
+    struct company *next;
+};
+
+void add(sc *c) {
+    char name[20];
+    int payments;
+    printf("Enter name:");
+    scanf("%s", name);
+    printf("Enter payments:");
+    scanf("%d", &payments);
+    if (c->payments == -1) {
+        c->payments = payments;
+        strcpy(c->name, name);
+        c->next = NULL;
+    }
+    else {
+        while (c->next != NULL)
+           c = c->next;
+        c->next = (sc *)malloc(sizeof(sc));
+        c = c->next;
+        c->next = NULL;
+        c->payments = payments;
+        strcpy(c->name, name);
+    }
+
+}
+
+void show(sc *c) {
+    while (c != NULL) {
+
+        printf("Name:%s\n", c->name);
+        printf("Payments: %d\n", c->payments);
+        printf("--------------------\n");
+        c = c->next;
+    }
+    printf("\n");
+}
+int main() {
+   int a;
+   sc *head = (sc*)malloc(sizeof(sc));
+    head->payments =-1;
+    do {
+        printf(" 1) Add\n 2) Show\n "
+               "pleas, enter anumber\n");
+        scanf("%d",&a);
+
+        a==1? add(head) : a==2?show(head) :exit(0);
+    }while (a);
+    return 0;
+}
